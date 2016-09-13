@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/style.css" media="all">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="Form" ng-controller="FormCtrl">
+	<!-- directive: form-title -->
+	<form name="inputForm">
+		<input type="text" name="firstName" ng-model="firstName"><br/>
+	  	<input type="text" name="lastName" ng-model="lastName"><br/>
+	  	<input type="email" name="email" ng-model="email"><br/>
+	  	<select ng-model="course" ng-options="c.name for c in classes"></select><br/>
+	  	<span ng-show="inputForm.email.$error.email">Invalid email address.</span>
+	  	<input type="checkbox" ng-model="agreement" id="agreement"><label for="agreement">Agreement</label><br/>
+	  	<button ng-disabled="!agreement" ng-click="addStudent()">Submit</button>
+	  	<button ng-click="reset()">Reset</button>
+  	</form>
+
+  <p>Name: {{firstName + ' ' + lastName}}</p>
+  <p>Email: {{email}}</p>
+  <p>Couses: {{course.name + '. It takes ' + course.course + ' weeks.'}}</p>
+  <p>Uni: {{school}}</p>
+  
+  <div persons-table-title></div>
+  
+  <table>
+  	<tr>
+  		<th></th>
+  		<th ng-click="sort('firstName')">First Name</th>
+  		<th ng-click="sort('lastName')">Last Name</th>
+  		<th ng-click="sort('email')">Email</th>
+  		<th>School</th>
+  	</tr>
+  	<tr ng-repeat="p in persons | filter: firstName | orderBy:x:reverse">
+  		<td>{{$index + 1}}</td>
+  		<td>{{p.firstName}}</td>
+  		<td>{{p.lastName}}</td>
+  		<td>{{p.email}}</td>
+  		<td>{{school | uppercase}}</td>
+  	</tr>
+  </table>
+  
+  <a href="{{url}}">home</a>
+  <div>{{currentTime}}</div>
+</div>
+
+<script src="app/modules.js"></script>
+<script src="app/ctrlFormCtrl.js"></script>
+<script src="app/direcFormTitle.js"></script>
+<script src="app/direcPersonTable.js"></script>
+<script src="app/servAddText.js"></script>
+</body>
+</html>

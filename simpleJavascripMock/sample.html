@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+	  #canvas{
+		width:900px;
+		height:900px;
+		position:relative;
+		margin:0 auto;
+		background-color:rgb(240, 241, 241);
+		border-radius:50%;
+		margin-top:50px;
+	  }
+	  .item{
+		position:absolute;
+	  }
+	  text{
+		text-anchor: middle;
+	  }
+	  .logo img{
+		width:200px;
+		height:auto;
+		margin:30px 0 0 30px;
+	  }
+	  .reset{
+		margin-top:50px;
+		cursor:pointer;
+		text-align:right;
+	  }
+	  .reset img{
+		width:50px;
+		height:auto;
+	  }
+	  .left-bar{
+		float:left;
+		clear:left;
+		position:fixed;
+		bottom:0;
+	  }
+	  .left-bar img{
+		width:50px;
+		height:auto;
+	  }
+    </style>
+  </head>
+  <body>
+	<div class="logo"><img src="images/kco.jpg" alt="logo"></div>
+	<div class="left-bar"><img src="images/left.jpg" alt="left"></div>
+	<div id="canvas">
+		<svg width='110' height="110" id="c1" style="left:506.108240375px;top:506.023777166px;" class="item" onClick="process('c1');">
+			<circle class="c" cx="50%" cy="50%" r="50" stroke="black" stroke-width="0" fill="rgb(160, 206, 109)" />
+			<text class="t" x="50%" y="50%" fill="#fff">PCM</text>
+		</svg> 
+		
+		<svg width='110' height="110" id="c2" onClick="" style="left:294.060753277px;top:506.192636297px;" class="item">
+			<circle class="c" cx="50%" cy="50%" r="50" stroke="black" stroke-width="0" fill="rgb(160, 206, 109)" />
+			<text class="t" x="50%" y="50%" fill="#fff">Success with PCM</text>
+		</svg> 
+		
+		<svg width='110' height="110" id="c3" onClick="" style="left:293.723035121px;top:294.1453509px;" class="item">
+			<circle class="c" cx="50%" cy="50%" r="50" stroke="black" stroke-width="0" fill="rgb(160, 206, 109)" />
+			<text class="t" x="50%" y="50%" fill="#fff">KCO</text>
+		</svg>
+		
+		<svg width='110' height="110" id="c4" onClick="" style="left:505.769984351px;top:293.638773934px;" class="item">
+			<circle class="c" cx="50%" cy="50%" r="50" stroke="black" stroke-width="0" fill="rgb(160, 206, 109)" />
+			<text class="t" x="50%" y="50%" fill="#fff">Prepare to Succeed</text>
+		</svg>
+		
+		<div class="reset" onClick="location.reload()"><img src="images/reset.jpg" alt="reset"></div>
+	</div>
+	
+	
+	
+	<script>
+	
+	//fadeIn and fadeOut element
+	(function() {
+    var FX = {
+        easing: {
+            linear: function(progress) {
+                return progress;
+            },
+            quadratic: function(progress) {
+                return Math.pow(progress, 2);
+            },
+            swing: function(progress) {
+                return 0.5 - Math.cos(progress * Math.PI) / 2;
+            },
+            circ: function(progress) {
+                return 1 - Math.sin(Math.acos(progress));
+            },
+            back: function(progress, x) {
+                return Math.pow(progress, 2) * ((x + 1) * progress - x);
+            },
+            bounce: function(progress) {
+                for (var a = 0, b = 1, result; 1; a += b, b /= 2) {
+                    if (progress >= (7 - 4 * a) / 11) {
+                        return -Math.pow((11 - 6 * a - 11 * progress) / 4, 2) + Math.pow(b, 2);
+                    }
+                }
+            },
+            elastic: function(progress, x) {
+                return Math.pow(2, 10 * (progress - 1)) * Math.cos(20 * Math.PI * x / 3 * progress);
+            }
+        },
+        animate: function(options) {
+            var start = new Date;
+            var id = setInterval(function() {
+                var timePassed = new Date - start;
+                var progress = timePassed / options.duration;
+                if (progress > 1) {
+                    progress = 1;
+                }
+                options.progress = progress;
+                var delta = options.delta(progress);
+                options.step(delta);
+                if (progress == 1) {
+                    clearInterval(id);
+                    options.complete();
+                }
+            }, options.delay || 10);
+        },
+        fadeOut: function(element, options) {
+            var to = 1;
+            this.animate({
+                duration: options.duration,
+                delta: function(progress) {
+                    progress = this.progress;
+                    return FX.easing.swing(progress);
+                },
+                complete: options.complete,
+                step: function(delta) {
+                    element.style.opacity = to - delta;
+                }
+            });
+        },
+        fadeIn: function(element, options) {
+            var to = 0;
+            this.animate({
+                duration: options.duration,
+                delta: function(progress) {
+                    progress = this.progress;
+                    return FX.easing.swing(progress);
+                },
+                complete: options.complete,
+                step: function(delta) {
+                    element.style.opacity = to + delta;
+                }
+            });
+        }
+    };
+    window.FX = FX;
+	})()
+	
+	
+	//Elements actions
+	function process(id){
+		
+		/******** Sample Data begin ********/
+		/******** setup example variables, will do this with API ********/
+		/******** circle equation (x0 - x1)^ + (y0 - y1)^ = r^ **********/
+		
+		
+		if(id == 'c1'){
+			
+			CIRCLE.myMove('c2', 320, 815, 30, 500);
+			CIRCLE.myMove('c3', 450, 816, 30, 500);
+			CIRCLE.myMove('c4', 570, 817, 30, 500);
+			/*var move_ids = [{id:'c2', x:320, y:825, r:30, time:500},
+							{id:'c3', x:450, y:816, r:30, time:500},
+							{id:'c4', x:570, y:817, r:30, time:500},];*/
+		
+			var fadeOut_ids = [];
+			var fadeIn_ids = [{id:"c5", x:450, y:295, r:50, fill:"rgb(186, 188, 190)", content:"Who we are", color:"#fff"},
+							{id:"c6", x:330, y:545, r:50, fill:"rgb(186, 188, 190)", content:"Teach", color:"#fff"},
+							{id:"c7", x:570, y:545, r:50, fill:"rgb(186, 188, 190)", content:"Learn", color:"#fff"}];
+		}
+		
+		if(id == 'c5'){
+			var fadeOut_ids = ['c1', 'c6', 'c7'];
+			var fadeIn_ids = [{id:"c9", x:600, y:445, r:40, fill:"#fff", content:"test 1", color:'#000'},
+							{id:"c10", x:525.068953351, y:574.863975924, r:40, fill:"#fff", content:"test 2", color:'#000'},
+							{id:"c11", x:375.137970097, y:574.983370008, r:40, fill:"#fff", content:"test 3", color:'#000'},
+							{id:"c12", x:300.000190241, y:445.238897937, r:40, fill:"#fff", content:"test 4", color:'#000'},
+							{id:"c13", x:374.724313617, y:315.255747567, r:40, fill:"#fff", content:"test 5", color:'#000'},
+							{id:"c14", x:524.654916565, y:314.897565616, r:40, fill:"#fff", content:"test 6", color:'#000'}]; //per 30 degree
+		}
+		
+		/******* Sample Data End ********/
+	
+	
+	
+		CIRCLE.myMove(id, CIRCLE.x0, CIRCLE.y0, 80, 500);
+
+		if(fadeOut_ids){
+			fadeOut_ids.forEach(CIRCLE.fadeOut);
+		}
+		
+		if(fadeIn_ids){
+			fadeIn_ids.forEach(CIRCLE.fadeIn);
+		}
+
+	}
+	
+	//CIRCLE object
+	(function() {
+    var CIRCLE = {
+		x0: 450,
+		y0: 450,
+        myMove: function (id, new_x, new_y, new_r, time) {
+		  document.getElementById(id).style.pointerEvents = 'none';
+		  var elem = document.getElementById(id);
+		  
+		  //get current position(top=y, left=x) and r and svg width
+		  var current_y = Number(document.getElementById(id).style.top.slice(0, -2));
+		  var current_x = Number(document.getElementById(id).style.left.slice(0, -2));
+		  var current_r = Number(document.getElementById(id).getElementsByClassName("c")[0].getAttribute('r'));
+		  var current_width = Number(document.getElementById(id).getAttribute('width'));
+		  
+		  //caculate x, y movement per frame
+		  var x_per_frame = ((new_x - new_r) - current_x)/(time/5);
+		  var y_per_frame = ((new_y - new_r) - current_y)/(time/5);
+		  var r_per_frame = (new_r - current_r)/(time/5);
+		
+		  //initial movement
+		  var move = setInterval(frame, 5);
+		  var frame_x = current_x;
+		  var frame_y = current_y;
+		  var frame_r = current_r;
+		  var frame_w = current_width;
+		  
+		  //distance
+		  var distance_x = Math.abs((new_x - new_r) - current_x);
+		  
+		  var frame_distance_x = 0;
+		  
+		  function frame() {
+			if (frame_distance_x >= distance_x) {
+			  clearInterval(move);
+			} else {
+			  frame_distance_x += Math.abs(x_per_frame);
+		
+			  frame_x += x_per_frame;
+			  frame_y += y_per_frame;
+			  frame_r += r_per_frame;
+			  frame_w += 2*r_per_frame;
+
+			  elem.getElementsByClassName("c")[0].setAttribute("r", frame_r);
+			  elem.style.top = frame_y + ('px');
+			  elem.style.left = frame_x + ('px');
+			  elem.setAttribute("width", frame_w);
+			  elem.setAttribute("height", frame_w);
+			}
+		  }
+		  
+		  setTimeout(function(){
+			var ele = document.getElementById(id);
+			if(ele){
+				ele.style.pointerEvents = 'auto';
+			}
+		  },1000);
+		  
+		},
+        placeEle: function (id, x, y, r, fill, content, color){
+			var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			var width = 2*r+10;
+			
+			svg.setAttribute('width',width);
+			svg.setAttribute('height',width);
+			svg.setAttribute('id',id);
+			svg.setAttribute('class','item');
+			svg.setAttribute('style','top:'+(y - r)+'px;left:'+(x - r)+'px;opacity: 0;');
+			svg.setAttribute('onclick','process("'+id+'")');
+
+			var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+			circle.setAttribute('fill',fill);
+			circle.setAttribute('class','c');
+			circle.setAttribute('cy','50%');
+			circle.setAttribute('cx','50%');
+			circle.setAttribute('stroke','black');
+			circle.setAttribute('stroke-width','0');
+			circle.setAttribute('r',r);
+
+			var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+			text.setAttribute('class', 't');
+			text.setAttribute('x', '50%');
+			text.setAttribute('y', '50%');
+			text.setAttribute('fill', color);
+			text.textContent = content;
+
+			svg.appendChild(circle);
+			svg.appendChild(text); 
+
+			var wp = document.getElementById('canvas'); 
+			wp.appendChild(svg);
+			
+			FX.fadeIn(document.getElementById(id), {
+				duration: 500,
+				complete: function() {
+					
+				}
+			});
+		},
+		fadeOut: function (id){
+			
+			FX.fadeOut(document.getElementById(id), {
+				duration: 500,
+				complete: function() {
+					var elem = document.getElementById(id);
+					elem.remove();
+				}
+			});
+		},
+		fadeIn: function (item){
+			CIRCLE.placeEle(item.id, item.x, item.y, 0, item.fill, item.content, item.color);
+			
+			CIRCLE.myMove(item.id, item.x, item.y, item.r, 500);
+			
+			FX.fadeIn(document.getElementById(item.id), {
+				duration: 500,
+				complete: function() {
+				}
+			});
+		}
+    };
+    window.CIRCLE = CIRCLE;
+	})();
+
+	
+	</script>
+
+  </body>
+</html>   
